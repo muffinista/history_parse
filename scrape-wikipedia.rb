@@ -9,6 +9,10 @@ require 'json'
 require 'open-uri'
 require 'nokogiri'
 
+if !File.directory?('data')
+	Dir.mkdir 'data'
+end
+
 span = Date.new(2000, 1, 1)..Date.new(2000, 12, 31)
 span.each { |x| 
   actual_date = x.strftime("%m-%d")
@@ -20,7 +24,7 @@ span.each { |x|
   data = {
   }
 
-  url = "http://en.wikipedia.org/wiki/#{x.strftime('%B')}_#{x.strftime('%e').strip}"
+  url = "https://en.wikipedia.org/wiki/#{x.strftime('%B')}_#{x.strftime('%e').strip}"
   puts url
   wikitext = open(url) do |f|
     f.read
@@ -55,7 +59,7 @@ span.each { |x|
         if link.attributes['title']
           {
             title: link.attributes['title'].value,
-            link: "http://wikipedia.com#{link.attributes['href'].value}"
+            link: "https://wikipedia.com#{link.attributes['href'].value}"
           }
         else
           nil
@@ -72,7 +76,7 @@ span.each { |x|
 
   results = {
     :date => wiki_date,
-    :url => "http://wikipedia.org/wiki/#{wiki_date.gsub(/ /, '_')}",
+    :url => "https://wikipedia.org/wiki/#{wiki_date.gsub(/ /, '_')}",
     :data => data
   }
   File.open("data/#{actual_date}.json", 'w') {|f| f.write(results.to_json) }
