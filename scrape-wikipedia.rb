@@ -55,11 +55,15 @@ span.each { |x|
         maybe_year.remove
       end
 
+      item.css("a").each { |link|
+        link["href"] = "https://wikipedia.org#{link['href']}"
+      }
+      
       links = item.css("a").collect { |link|
         if link.attributes['title']
           {
             title: link.attributes['title'].value,
-            link: "https://wikipedia.com#{link.attributes['href'].value}"
+            link: link['href']
           }
         else
           nil
@@ -69,6 +73,7 @@ span.each { |x|
       data[key] << {
         year: year,
         text: result,
+        html: item.inner_html.gsub(/^ – /, ""),
         links: links       
       }
     end
