@@ -31,6 +31,10 @@ span.each { |x|
   end
   File.open("data/#{actual_date}.html", 'w') {|f| f.write(wikitext) }
 
+
+  # switch to regular dashes
+  wikitext.gsub!(/–/, "-")
+  
   doc = Nokogiri::HTML(wikitext)
   ["Events", "Births", "Deaths"].each do |key|
     data[key] ||= []
@@ -46,7 +50,7 @@ span.each { |x|
       # 153 BC – Roman consuls begin their year in office.
       
       # figure out the year of the event
-      year, result = text.split(" – ", 2)
+      year, result = text.split(" - ", 2)
       #puts item.inspect
       
       # remove the first link if it happens to be the year
@@ -73,7 +77,7 @@ span.each { |x|
       data[key] << {
         year: year,
         text: result,
-        html: item.inner_html.gsub(/^ – /, ""),
+        html: item.inner_html.gsub(/^#{year.to_i} ?- /, "").gsub(/^ - /, ""),
         links: links       
       }
     end

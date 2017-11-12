@@ -8,8 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = HistoryParse::VERSION
   spec.authors       = ["Colin Mitchell"]
   spec.email         = ["muffinista@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Scrape history data from wikipedia}
   spec.homepage      = ""
   spec.license       = "MIT"
 
